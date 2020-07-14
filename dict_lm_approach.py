@@ -8,7 +8,6 @@ from transformers import BertTokenizer, BertForMaskedLM
 
 from spacy.lang.es import Spanish
 
-
 AMBIGUITY_TOKEN = "[AMBIGUITY]"
 
 
@@ -72,8 +71,12 @@ def execute_translation(data_folder, source_lang, target_lang, num_samples, meas
                 input_text = input_text.strip().lower()
                 target_text = target_text.strip().lower()
 
+                print(f"{i}:")
+                print(f"    Input: {input_text}")
+                print(f"    Target: {target_text}")
+
                 input_tokens = [token.text for token in spacy_tokenizer(input_text)]
-                target_tokens = [token.text for token in  spacy_tokenizer(target_text)]
+                target_tokens = [token.text for token in spacy_tokenizer(target_text)]
 
                 # First step, fill all non-homographs words
                 output_tokens = []
@@ -115,6 +118,8 @@ def execute_translation(data_folder, source_lang, target_lang, num_samples, meas
                 l_predicted.append(output_tokens)
                 l_expected.append(target_tokens)
 
+                print(f"    Target: {output_tokens}")
+
     return l_predicted, l_expected
 
 
@@ -123,7 +128,7 @@ if __name__ == '__main__':
     source_lang = "sentences_and"
     target_lang = "sentences_es"
 
-    num_samples = -1
+    num_samples = 100
     measure = "loss"
 
     lm_model_name = "dccuchile/uncased"  # "dccuchile/cased"
