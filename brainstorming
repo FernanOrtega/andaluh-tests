@@ -1,0 +1,22 @@
+seq2seq:
+1.- char based machine translation model
+    Results: hard to train, error-prone, lead to learn only short sentences
+2.- token based machine transalation model
+    Results: not yet but it's also hard to train, maintain, error-prone
+3.- Hybrid solution:
+    Apply dictionary-based transformation when no homographs exist
+    If homographs, evaluate with a pre-trained language model and select the word with the highest probability
+        Steps:
+            1.- Check BertLM. It's not valid since it computes the individual probability not the sequence one.
+                Trying again with PyTorch to compute loss
+            2.- Check gpt2:
+                Required PyTorch to compute a proper forward pass with computed loss
+                No gpt2 in spanish :(
+
+==================================
+Review previous notes :X
+
+Current approach: apply dict of homographs to translate as much tokens as possible and then, resolve homographs with a language model
+
+Metrics:
+    For now, global accuracy, but it's possible to check BLEU, NIST, Word Error Rate, METEOR, LEPOR.
